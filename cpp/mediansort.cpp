@@ -50,13 +50,6 @@ void quickSort(int *&xArray, int Startindex, int Lastindex)
 } 
  
 /* Function to print an xArrayay */
-void printarr(int *xArray, int size) { 
-    int i; 
-    for (i = 0; i < size; i++) 
-    cout << xArray[i] << " "; 
-    cout << endl; 
-} 
- 
 double findMedian(int *&sortedarr, int &size) {
     if (size % 2 != 0)
         return sortedarr[size / 2];

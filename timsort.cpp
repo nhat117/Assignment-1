@@ -1,75 +1,8 @@
-#include <iostream>
+// C++ program to perform TimSort.
+#include<bits/stdc++.h>
 using namespace std;
-#define START 0
-// Function prototype
-int divide (int *&inputarr, int STARTindex, int Lastindex);
-void quickSort(int *&inputarr, int STARTindex , int Lastindex) ;
-void swap(int* a, int* b) ;
-void printarr(int *inputarr, int size) ;
-double findMedian(int *& sortedarr, int size);
-//Timsort
-void timSort(int *&inputarr, int &sizeinput);
-void mergesorted(int *inputarr, int &LeftIndex, int &MidleIndex, int &RightIndex);
-void insertionSort(int *inputarr, int LeftIndex, int RightIndex);
-//Function definition
-void swap(int* a, int* b) 
-{ 
-    int temp = *a; 
-    *a = *b; 
-    *b = temp; 
-} 
  
-/*  takes last element as pivot point, places 
-the pivot element at its correct position in sorted 
-inputarray, and places all smaller (smaller than pivot) 
-to left of pivot and all greater elements to right 
-of pivotpoint */
-int divide (int *&inputarr, int STARTindex, int Lastindex) 
-{ 
-    int pivot = inputarr[Lastindex]; // pivot 
-    int i = (STARTindex - 1); // Index of smaller element and indicates the right position of pivot found so far
- 
-    for (int i2 = STARTindex; i2 <= Lastindex - 1; i2++) 
-    { 
-        // If current element is smaller than the pivot 
-        if (inputarr[i2] < pivot) 
-        { 
-            i++; // increment index of smaller element 
-            swap(&inputarr[i], &inputarr[i2]); 
-        } 
-    } 
-    swap(&inputarr[i + 1], &inputarr[Lastindex]); 
-    return (i + 1); 
-} 
- 
-/* The main function that implements QuickSort 
-inputarr[] --> inputarray to be sorted, 
-STARTindex --> STARTing index, 
-Lastindex --> Ending index */
-void quickSort(int *&inputarr, int STARTindex, int Lastindex) 
-{
-    if (STARTindex < Lastindex) 
-    { 
-        /* pivot is divideing index, inputarr[p] is now 
-        at right place */
-        int pivot = divide(inputarr, STARTindex, Lastindex); 
- 
-        // Separately sort elements before 
-        // divide and after divide 
-        quickSort(inputarr, STARTindex, pivot - 1); 
-        quickSort(inputarr, pivot + 1, Lastindex); 
-    } 
-} 
- 
-/* Function to print an inputarray */
-void printarr(int *inputarr, int size) { 
-    int i; 
-    for (i = 0; i < size; i++) 
-        cout << inputarr[i] << " "; 
-    cout << '\n'; 
-} 
- 
- // This function sorts inputarray from LeftIndex index to
+// This function sorts inputarray from LeftIndex index to
 // to RightIndex index which is of size atmost RUN
 void insertionSort(int *inputarr, int LeftIndex, int RightIndex)
 {
@@ -144,18 +77,17 @@ void timSort(int *&inputarr, int &sizeinput)
 {
      
     // Sort individual subarrays of size RUN
-    for (int i = 0; i < sizeinput; i+=sizeinput) {
+    for (int i = 0; i < sizeinput; i+=sizeinput)
         insertionSort(inputarr, i, min((i + sizeinput - 1), (sizeinput-1)));
-	}
  
-    // START merging from size RUN (or 32). 
+    // Start merging from size RUN (or 32). 
     // It will mergesorted
     // to form size 64, then 128, 256 
     // and so on ....
     for (int size = sizeinput; size < sizeinput; size = 2*size)
     {
          
-        // pici3 STARTing point of 
+        // pici3 starting point of 
         // LeftIndex sub inputarray. We
         // are going to mergesorted 
         // inputarr[LeftIndex..LeftIndex+size-1]
@@ -167,7 +99,7 @@ void timSort(int *&inputarr, int &sizeinput)
              
             // find ending point of 
             // LeftIndex sub inputarray
-            // mid+1 is STARTing point 
+            // mid+1 is starting point 
             // of RightIndex sub inputarray
             int mid = LeftIndex + size - 1;
             int RightIndex = min((LeftIndex + 2*size - 1), (sizeinput-1));
@@ -179,13 +111,33 @@ void timSort(int *&inputarr, int &sizeinput)
         }
     }
 }
-
-double findMedian(int *&sortedarr, int size) {
-	size --;
-	quickSort(sortedarr, START , size);
-	// timSort(sortedarr,size);
-    if (size % 2 != 0)
-        return sortedarr[size / 2];
-    return (sortedarr[(size - 1) / 2] + sortedarr[size / 2]) / 2;
+ 
+// Utility function to print the inputarray
+void printArray(int *inputarr, int n)
+{
+    for (int i = 0; i < n; i++)
+        printf("%d  ", inputarr[i]);
+    printf("\n");
 }
-
+ 
+// Driver program to test above function
+int main()
+{
+	int* arr = new int[5];
+	arr[0] = 1;
+	arr[1] = 4;
+	arr[2] = 3;
+	arr[3] = 7;
+	arr[4] = 6;
+    int n = 5;
+	cout << "n:" << n << endl;
+    printf("Given inputarray is\n");
+    printArray(arr, n);
+ 
+    // Function Call
+    timSort(arr, n);
+ 
+    printf("After Sorting inputarray is\n");
+    printArray(arr, n);
+    return 0;
+}
