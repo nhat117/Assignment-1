@@ -4,7 +4,7 @@ using namespace std;
 #define MAX 1000000
 void mode(int* &arr, int size) {
 	int highest = 0;
-	int* count = new int[MAX];
+	int* count = new int[size];
 
 	// count the number of repetion of each element
 	for (int i = 0; i < size; i++) {
