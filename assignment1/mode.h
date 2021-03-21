@@ -1,7 +1,9 @@
 #include <iostream>
 
 using namespace std;
+
 #define MAX 1000000
+
 void mode(int* &arr, int size) {
 	int highest = 0;
 	int* count = new int[MAX];

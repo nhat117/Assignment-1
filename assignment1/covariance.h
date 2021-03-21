@@ -2,12 +2,10 @@
 
 using namespace std;
 
-float covariance(int* &arX, int* &arY, int arSize) {
-    float res = 0;
-    float meanX = mean(arX, arSize);
-    float meanY = mean(arY, arSize);
+long double covariance(int* &arX, int* &arY, int arSize, long double meanX, long double meanY) {
+    long double res = 0;
     for (int i = 0; i < arSize; i++) {
-        res = res + (arX[i] - meanX) * (arY[i] - meanY);
+        res += (((long double)arX[i] - meanX) * ((long double)arY[i] - meanY));
     }
-    return res / (arSize - 1);
+    return res / (long double)(arSize - 1);
 }
