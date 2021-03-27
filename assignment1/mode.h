@@ -2,11 +2,9 @@
 
 using namespace std;
 
-#define MAX 1000000
-
-void mode(int* &arr, int size) {
+void mode(int* &arr, int size, int maxelement) {
 	int highest = 0;
-	int* count = new int[MAX];
+	int* count = new int[maxelement];
 
 	// count the number of repetion of each element
 	for (int i = 0; i < size; i++) {
@@ -16,7 +14,7 @@ void mode(int* &arr, int size) {
 
 	// print the most frequently occurring elements
     cout << "{";
-	for (int i = 0; i < MAX; i++) {
+	for (int i = 0; i <= maxelement; i++) {
 		if (highest == count[i]) cout << " " << i << " ";
 	}
     cout << "}";

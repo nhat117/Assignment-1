@@ -23,16 +23,12 @@ using namespace std::chrono;
 
 using namespace std;
 
-#define group 27
-#define MAX 1000000
-
 //Main function
 int main(int argc, char* argv[]) {
 	//Start stopwatch
 	auto start = high_resolution_clock::now(); 
-	
-    int* xArray = new int[MAX];
-    int* yArray = new int[MAX];
+	//Initialise Variable
+    
     int cur = 0;
     int arraySize = 0;
     int maxX = -9999999;
@@ -49,10 +45,21 @@ int main(int argc, char* argv[]) {
         cerr << "Cannot open the file!\n";
         return 1;
     }
-    
+    //Open File
+    string lineTemp;
     while (!inp.eof()) {
-        getline(inp, x, ',');
-        getline(inp, y, '\n');
+        getline(inp, lineTemp);
+        arraySize++;
+    }
+    inp.close();
+    ifstream inp2(argv[1]);
+    arraySize--;
+    cout << "size: " << arraySize << endl;
+    int* xArray = new int[arraySize];
+    int* yArray = new int[arraySize];
+    while (!inp2.eof()) {
+        getline(inp2, x, ',');
+        getline(inp2, y, '\n');
         if (x == "x") continue;
         if (y == "y") continue;
         iX = stoi(x);
@@ -62,19 +69,25 @@ int main(int argc, char* argv[]) {
         if (iX > maxX) maxX = iX;
         if (iY > maxY) maxY = iY;
         cur++;
-        arraySize++;
     }
-    inp.close();
-
+    inp2.close();
+    
 	// sort array x and y
-	cout << "size: " << arraySize << endl;
+	
 	quicksort(xArray, 0, arraySize - 1);
 	quicksort(yArray, 0, arraySize - 1);
-
+    // for (int i = 0; i < arraySize; i++) {
+    //     cout << xArray[i] << " ";
+    // }
+    // cout << endl;
+    // for (int i = 0; i < arraySize; i++) {
+    //     cout << yArray[i] << " ";
+    // }
 	// Calculate meanX and meanY
 	long double meanX = mean(xArray, arraySize);
 	long double meanY = mean(yArray, arraySize);
-
+    long double covXY = covariance(xArray, yArray, arraySize, meanX, meanY);
+    cout << "cov(x_y) = " << covXY << "\n";
 	// Ex 1 Sort and fine median
     
 	// Calculate median
@@ -85,10 +98,10 @@ int main(int argc, char* argv[]) {
 	
 	//Ex 2 Calculate mode
 	cout << "mode_x : ";
-    mode(xArray, arraySize);
+    mode(xArray, arraySize, maxX);
     cout << " - ";
     cout << "mode_y : ";
-    mode(yArray, arraySize);
+    mode(yArray, arraySize, maxY);
     cout << "\n";
 	
     // EX 3 Variance and standart deviation
@@ -123,18 +136,16 @@ int main(int argc, char* argv[]) {
     //Section C
     //
     // EX C1 Covariane
-	long double covXY = covariance(xArray, yArray, arraySize, meanX, meanY);
-    cout << "cov(x_y) = " << covXY << "\n";
+	
 
     // EX C2 Pearson Correlation
-    // cout << "r(x_y) = " << correlationCoefficient(covXY, stdevX, stdevY) << "\n";
 	long double rXY = pcc(covXY, stdevX, stdevY);
 	cout << "Thinh r(x_y) = " << rXY << "\n";
 
 	// EX C3 Linear Regression
 	LinearRegression(meanX, meanY,stdevX, stdevY, rXY);
 
-    //delete array and close file
+    //Delete array and close file
     delete []xArray;
     delete []yArray;
 
@@ -146,5 +157,3 @@ int main(int argc, char* argv[]) {
    
     return 0;   
 }
-
- 
