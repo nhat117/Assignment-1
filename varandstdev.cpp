@@ -1,12 +1,11 @@
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <math.h>
 
 using namespace std;
 
 //Function definition
-long double variance(int*& myarray, int size, long double meanNum){
+long double variance(long double* myarray, int size, long double meanNum){
     long double res = 0;
     //Calculate the square difference between the element and the mean and sum it up
     for(int i = 0; i < size;i++){
@@ -19,5 +18,6 @@ long double variance(int*& myarray, int size, long double meanNum){
 }
 
 long double stdev(long double variance) {
+    // Standard deviation can be calculated by taking the square root of variance
 	return sqrt(variance);
 }
